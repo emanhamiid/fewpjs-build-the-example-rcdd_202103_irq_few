@@ -3,35 +3,35 @@ const EMPTY_HEART = '♡'
 const FULL_HEART = '♥'
 
 const glyphStates = {
-"♡": "♥",
-"♥": "♡"
+  "♡": "♥",
+  "♥": "♡"
 };
 
 const colorStates = {
-"red" : "",
-"": "red"
+  "red" : "",
+  "": "red"
 };
 
 const articleHearts = document.querySelectorAll(".like-glyph");
 
 function likeCallback(e) {
-const heart = e.target;
-mimicServerCall("bogusUrl")
- //OR: mimicServerCall("bogusUrl", {forceFailure: true})
-  .then(function(serverMessage){
-     heart.innerText = glyphStates[heart.innerText];
-     heart.style.color = colorStates[heart.style.color];
-  })
-  .catch(function(error) {
-    const modal = document.getElementById(".hidden");
-    modal.className = "";
-    modal.innerText = error;
-    setTimeout(() =>  modal.className = "hidden", 3000);
-  });
+  const heart = e.target;
+  mimicServerCall("bogusUrl")
+   //OR: mimicServerCall("bogusUrl", {forceFailure: true})
+    .then(function(serverMessage){
+       heart.innerText = glyphStates[heart.innerText];
+       heart.style.color = colorStates[heart.style.color];
+    })
+    .catch(function(error) {
+      const modal = document.getElementById("modal");
+      modal.className = "";
+      modal.innerText = error;
+      setTimeout(() =>  modal.className = "hidden", 3000);
+    });
 }
 
 for (const glyph of articleHearts) {
-glyph.addEventListener("click", likeCallback);
+  glyph.addEventListener("click", likeCallback);
 }
 
 
@@ -40,14 +40,14 @@ glyph.addEventListener("click", likeCallback);
 //------------------------------------------------------------------------------
 
 function mimicServerCall(url="http://mimicServer.example.com", config={}) {
-return new Promise(function(resolve, reject) {
-  setTimeout(function() {
-    const isRandomFailure = Math.random() < .2
-    if (isRandomFailure) {
-      reject("Random server error. Try again.");
-    } else {
-      resolve("Pretend remote server notified of action!");
-    }
-  }, 300);
-});
+  return new Promise(function(resolve, reject) {
+    setTimeout(function() {
+      const isRandomFailure = Math.random() < .2
+      if (isRandomFailure) {
+        reject("Random server error. Try again.");
+      } else {
+        resolve("Pretend remote server notified of action!");
+      }
+    }, 300);
+  });
 }
